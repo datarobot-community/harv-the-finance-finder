@@ -68,9 +68,3 @@ class PortfolioForm(FlaskForm):
     etf = BooleanField('Include ETFs?')
     restricted = StringField('Enter stock sticker symbol to have them excluded from AI and Analyst consideration')
     strategy =  SelectField(u'Portfolio Strategy', choices=[('growth', 'Focus on growth assets'), ('value', 'Focus on value assets')])
-    
-'''
-    growth = db.Column(db.Boolean)
-    value = db.Column(db.Boolean)
-    none = db.Column(db.Boolean)
-'''

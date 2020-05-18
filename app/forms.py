@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import DecimalField, StringField, PasswordField, BooleanField, SelectField, SelectMultipleField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length, ValidationError, EqualTo, DataRequired
-from app.models import User, Portfolio, Risk, Structure, Restriction, Strategy
+from app.models import User, Portfolio, Position
 
 
 class LoginForm(FlaskForm):
@@ -44,7 +44,7 @@ class PortfolioForm(FlaskForm):
     portfolio_type = SelectField(u'Type of Portfolio', choices=[('Aggressive', 'Aggressive'), ('Defensive', 'Defensive'), ('Hybrid', 'Hybdrid')])
     initial = DecimalField('Initial Investment Amount', validators=[InputRequired()])
     target = DecimalField('Target Value of Portfolio', validators=[InputRequired()])
-    tolderance = DecimalField('As a percentage how much risk are you willing to tolorate?', validators=[InputRequired()])
+    tolerance = DecimalField('As a percentage how much risk are you willing to tolorate?', validators=[InputRequired()])
     priority = SelectField(u'Portfolio Focus', choices=[('loss', 'Focus on loss tolerance'), ('target', 'Focus on Target Portfolio Value')])
     us_equities = BooleanField('US Equities')
     us_bonds = BooleanField('US Equities')

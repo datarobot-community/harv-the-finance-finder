@@ -4,7 +4,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegisterForm, ResetPasswordForm, ResetPasswordRequestForm, PortfolioForm
-from app.models import User
+from app.models import User, Portfolio
 
 @app.route('/')
 def index():
@@ -80,4 +80,17 @@ def reset_password(token):
 @app.route('/portfolio_build', methods=['GET', 'POST'])
 def create_portfolio():
     form = PortfolioForm()
+    if form.validate_on_submit():
+        new_portfolio = Portfolio(name=form.name.data, p_type=form.portfolio_type.data, initial=form.initial.data,
+                                target=form.target.data, tolerance=form.tolerance.data, priority=form.priority.data, us_equities=form.us_equities.data,
+                                us_bonds=form.us_bonds.data, treasury=form.treasury.data, int_equities=form.int_equities.data, commodities=form.commodities.data,
+                                real_estate=form.real_estate.data, mlps=form.mlps.data, int_bonds=form.int_bonds.data, financial=form.financial.data,
+                                utilitie=form.utilities.data, health_care=form.health_care.data, con_dis=form.con_dis.data, energy=form.energy.data,
+                                industrials=form.industrials.data, con_staples=form.con_staples.data, re=form.re.data, tech=form.tech.data,
+                                materials=form.materials.data, telco=form.telco.data, etf=form.etf.data, restricted=form.restricted.data,
+                                strategy=form.strategy.data)
+        db.session.add(new_portfolio)
+        db.session.commit()
+        flash('Congratulations, you have created a portfolio')
+        return redirect(url_for('portfolio_build'))
     return render_template('portfolio_build.html', title='Portfolio Wizard', form=form)

@@ -45,21 +45,10 @@ class Portfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     p_type = db.Column(db.String(200))
-    holding = db.Column(db.String(5))
-    holding_long = db.Column(db.String(250))
-    shares = db.Column(db.Float)
-    price = db.Column(db.Float)
-    change = db.Column(db.Float)
-    
-class Risk(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     initial = db.Column(db.Numeric)
     target = db.Column(db.Numeric)
     tolerance = db.Column(db.Numeric)
     priority = db.Column(db.String(100))
-    
-class Structure(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     us_equities = db.Column(db.Boolean)
     us_bonds = db.Column(db.Boolean)
     treasury = db.Column(db.Boolean)
@@ -68,9 +57,6 @@ class Structure(db.Model):
     real_estate = db.Column(db.Boolean)
     mlps = db.Column(db.Boolean)
     int_bonds = db.Column(db.Boolean)
-    
-class Restriction(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
     financial = db.Column(db.Boolean)
     utilitie = db.Column(db.Boolean)
     health_care = db.Column(db.Boolean)
@@ -84,7 +70,15 @@ class Restriction(db.Model):
     telco = db.Column(db.Boolean)
     etf = db.Column(db.Boolean)
     restricted = db.Column(db.String(500))
+    strategy = db.Column(db.String(50))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    positions = db.relationship('Position', backref="portfolio")
     
-class Strategy(db.Model):
+class Position(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    strategy = db.Column(db.String(50))    
+    symbol = db.Column(db.String(5))
+    holding_long = db.Column(db.String(250))
+    shares = db.Column(db.Float)
+    price = db.Column(db.Float)
+    change = db.Column(db.Float)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'))

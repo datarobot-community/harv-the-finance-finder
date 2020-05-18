@@ -10,7 +10,7 @@ Build your Portfolio
 
 
 <div class="container">
-  <form class="form-signin" method="POST" action="/create_portfolio">
+  <form class="form-signin" method="POST" action="/portfolio_build">
     <h2 class="form-signin-heading">Basic Portfolio Information</h2>
     {{ form.hidden_tag() }}
     {{ wtf.form_field(form.name) }}
@@ -19,7 +19,7 @@ Build your Portfolio
     <h2 class="form-signin-heading">Risk</h2>   
     {{ wtf.form_field(form.target) }}
     {{ wtf.form_field(form.priority) }}
-    {{ wtf.form_field(form.tolderance) }}
+    {{ wtf.form_field(form.tolerance) }}
     <h2 class="form-signin-heading">Structure</h2>  
     {{ wtf.form_field(form.us_equities) }}
     {{ wtf.form_field(form.treasury) }} 

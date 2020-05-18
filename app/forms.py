@@ -1,0 +1,48 @@
+from flask_wtf import FlaskForm
+from wtforms import DecimalField, StringField, PasswordField, BooleanField, SelectField, SelectMultipleField, SubmitField, TextAreaField
+from wtforms.validators import InputRequired, Email, Length, ValidationError, EqualTo, DataRequired
+from app.models import User, Portfolio, Risk, Structure, Restriction, Strategy
+
+
+class LoginForm(FlaskForm):
+    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    remember_me = BooleanField('remember me')
+    submit = SubmitField('Sign In')
+    
+class RegisterForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired(), Length(min=4, max=15)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=8, max=80)])
+    password2 = PasswordField('Repeat Password', validators=[InputRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+    
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different username.')
+        
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')
+    
+class PortfolioForm(FlaskForm):
+    name = StringField('Portfolio Name', validators=[InputRequired(), Length(min=1, max=100)])
+    portfolio_type = SelectField(u'Type of Portfolio', choices=[('Aggressive', 'Aggressive'), ('Defensive', 'Defensive'), ('Hybrid', 'Hybdrid')])
+    target = DecimalField('Target Value of Portfolio', validators=[InputRequired()], places=2)
+    priority = SelectField(u'Portfolio Focus', choices=[('loss', 'Focus on loss tolerance'), ('target', 'Focus on Target Portfolio Value')])
+    
+    

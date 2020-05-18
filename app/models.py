@@ -87,7 +87,4 @@ class Restriction(db.Model):
     
 class Strategy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    growth = db.Column(db.Boolean)
-    value = db.Column(db.Boolean)
-    none = db.Column(db.Boolean)
-    
+    strategy = db.Column(db.String(50))    

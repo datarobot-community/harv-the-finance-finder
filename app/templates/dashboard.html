@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="heading">Your portfolios</h1>
+    <ul>
+        {% for portfolio in user_portfolios %}
+        <li><a href="portfolio/{{portfolio.id}}">{{ portfolio.name }} ({{ portfolio.p_type}})</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

@@ -7,17 +7,53 @@ Build your Portfolio
 
 
 {% block content %}
+
+
 <div class="container">
-  <form class="form-signin" method="POST" action="/signup">
-    <h2 class="form-signin-heading">Sign Up</h2>
+  <form class="form-signin" method="POST" action="/portfolio_build">
+    <h2 class="form-signin-heading">Basic Portfolio Information</h2>
     {{ form.hidden_tag() }}
     {{ wtf.form_field(form.name) }}
-    {{ wtf.form_field(form.portfolio_type) }}    
-    {{ wtf.form_field(form.target) }}
-    {{ wtf.form_field(form.priority) }}
+    {{ wtf.form_field(form.portfolio_type) }}
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+    <h2 class="form-signin-heading">Exchanges to include</h2>  
+    {{ wtf.form_field(form.include_nyse) }}
+    {{ wtf.form_field(form.include_nasdaq) }} 
+    {{ wtf.form_field(form.include_nyse_arca) }} 
+    {{ wtf.form_field(form.include_nyse_american) }} 
+
+    <h2 class="form-signin-heading">Exclude sectors</h2>
+    <p>
+        Below select which industry sectors you would like to EXCLUDE from the AI to consider
+    </p>
+    {{ wtf.form_field(form.exclude_communications) }}
+    {{ wtf.form_field(form.exclude_energy_minerals) }} 
+    {{ wtf.form_field(form.exclude_non_energy_minerals) }} 
+    {{ wtf.form_field(form.exclude_health_technology) }} 
+    {{ wtf.form_field(form.exclude_health_services) }} 
+    {{ wtf.form_field(form.exclude_utilities) }} 
+    {{ wtf.form_field(form.exclude_distribution_services) }}
+    {{ wtf.form_field(form.exclude_finance) }}
+    {{ wtf.form_field(form.exclude_process_industries) }} 
+    {{ wtf.form_field(form.exclude_producer_manufacturing) }} 
+    {{ wtf.form_field(form.exclude_commercial_services) }} 
+    {{ wtf.form_field(form.exclude_industrial_services) }} 
+    {{ wtf.form_field(form.exclude_consumer_durables) }}
+    {{ wtf.form_field(form.exclude_consumer_non_durables) }}
+    {{ wtf.form_field(form.exclude_transportation) }}
+    {{ wtf.form_field(form.exclude_retail_trade) }}
+    {{ wtf.form_field(form.exclude_electronic_technology) }}
+    {{ wtf.form_field(form.exclude_technology_services) }}
+
+    <h2 class="form-signin-heading">ESG Risk tolerance</h2>
+    <p>
+        Below select your level of ESG (Environmental, Social, Governance) risk you would like this portfolio to be focused on.
+    </p>
+    {{ wtf.form_field(form.esg_risk_category) }}
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Create Portfolio</button>
   </form>
 
 </div> <!-- /container -->
+<p><p><p></p>
 {% endblock %}

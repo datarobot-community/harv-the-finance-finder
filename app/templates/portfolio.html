@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="heading">Portfolio: {{ portfolio.name }}</h1>
+
+    <div>
+        Portfolio type: {{ portfolio.p_type.title() }} </br>
+        Risk level: {{ portfolio.riskLevel() }} <br/>
+    </div>
+
+    <h2>Exchanges allowed in portfolio:</h2>
+    <ul>
+        {% if portfolio.include_nyse %} <li>New York Stock Exchange </li>{% endif %}
+        {% if portfolio.include_nasdaq %} <li>NASDAQ</li>{% endif %}
+        {% if portfolio.include_nyse_arca %} <li>NYSE ARCA</li>{% endif %}
+        {% if portfolio.include_nyse_american %} <li>NYSE American</li>{% endif %}
+    </ul>
+
+    <h2>Excluded sectors:</h2>
+    {% if portfolio.exclude_communications %} <li>Financial </li>{% endif %}
+    {% if portfolio.exclude_energy_minerals %} <li>Energy Minerals </li>{% endif %}
+    {% if portfolio.exclude_health_technology %} <li>Health Technology </li>{% endif %}
+    {% if portfolio.exclude_non_energy_minerals %} <li>Non Energy Minerals </li>{% endif %}
+    {% if portfolio.exclude_utilities %} <li>Utilities </li>{% endif %}
+    {% if portfolio.exclude_technology_services %} <li>Technology Services </li>{% endif %}
+    {% if portfolio.exclude_consumer_durables %} <li>Consumer Durables</li>{% endif %}
+    {% if portfolio.exclude_distribution_services %} <li>Distribution Services</li>{% endif %}
+    {% if portfolio.exclude_finance %} <li>Finance </li>{% endif %}
+    {% if portfolio.exclude_process_industries %} <li>Process Industries</li>{% endif %}
+    {% if portfolio.exclude_producer_manufacturing %} <li>Producer Manufacturing</li>{% endif %}
+    {% if portfolio.exclude_commercial_services %} <li>Commerical Services</li>{% endif %}
+    {% if portfolio.exclude_industrial_services %} <li>Industrial Services</li>{% endif %}
+    {% if portfolio.exclude_transportation %} <li>Transportation</li>{% endif %}
+    {% if portfolio.exclude_consumer_non_durables %} <li>Consumer Non Durables</li>{% endif %}
+    {% if portfolio.exclude_health_services %} <li>Health Services</li>{% endif %}
+    {% if portfolio.exclude_retail_trade %} <li>Retail Trade</li>{% endif %}
+    {% if portfolio.exclude_electronic_technology %} <li>Electronic Technology</li>{% endif %}
+
+    <h1>Stocks that fit your criteria</h1>
+    <div class="stock_suggestions">
+        
+        <ol>
+            {% for suggestion in portfolio.stockSuggestions() %}
+            <li>{{suggestion}}</li>
+            {% endfor %}
+        </ol>
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,2 @@
+FLASK_APP=harv.py
+FLASK_ENV=development

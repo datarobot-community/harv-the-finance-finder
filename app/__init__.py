@@ -1,4 +1,8 @@
 from flask import Flask
+import os
+from dotenv import load_dotenv
+import redis
+from rq import Queue
 from config import Config
 from flask_migrate import Migrate
 from flask_sqlalchemy  import SQLAlchemy
@@ -16,7 +20,19 @@ login = LoginManager(app)
 bootstrap = Bootstrap(app)
 mail = Mail(app)
 
+APCA_API_KEY = os.getenv("APCA_API_KEY")
+APCA_SECRET_KEY = os.getenv("APCA_SECRET_KEY")
+APCA_HEADERS = {'APCA-API-KEY-ID': APCA_API_KEY, 'APCA-API-SECRET-KEY': APCA_SECRET_KEY}
+APCA_BASE_URL = "https://paper-api.alpaca.markets"
+        
+IEX_ACCOUNT = os.getenv("IEX_ACCOUNT")
+IEX_KEY = os.getenv("IEX_KEY")
+IEX_BASE_URL = "https://cloud.iexapis.com/stable/stock/"
+
+r = redis.Redis()
+
+q = Queue(connection=r)
 
 
 
-from app import routes, models, forms
+from app import routes, models, forms, tasks

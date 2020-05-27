@@ -1,7 +1,9 @@
 import os
+from dotenv import load_dotenv
+
 
 class Config(object):
     DEBUG = True
-    SECRET_KEY = 'you-will-never-guess'
-    SQLALCHEMY_DATABASE_URI='postgresql://rsevey:Niner99~@localhost/harv_db'
+    SECRET_KEY = os.getenv("SKEY")
+    SQLALCHEMY_DATABASE_URI= os.getenv("POSTGRES_CONNECT")
     SQLALCHEMY_TRACK_MODIFICATIONS=False

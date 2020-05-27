@@ -1,0 +1,67 @@
+https://cloud.iexapis.com/stable/ref-data/sectors?
+
+[
+    {
+        "name": "Electronic Technology"
+    },
+    {
+        "name": "Distribution Services"
+    },
+    {
+        "name": "Health Technology"
+    },
+    {
+        "name": "Commercial Services"
+    },
+    {
+        "name": "Industrial Services"
+    },
+    {
+        "name": "Finance"
+    },
+    {
+        "name": "Process Industries"
+    },
+    {
+        "name": "Transportation"
+    },
+    {
+        "name": "Technology Services"
+    },
+    {
+        "name": "Producer Manufacturing"
+    },
+    {
+        "name": "Retail Trade"
+    },
+    {
+        "name": "Consumer Services"
+    },
+    {
+        "name": "Non-Energy Minerals"
+    },
+    {
+        "name": "Utilities"
+    },
+    {
+        "name": "Miscellaneous"
+    },
+    {
+        "name": "Hercalcalth Services"
+    },
+    {
+        "name": "Consumer Durables"
+    },
+    {
+        "name": "Consumer Non-Durables"
+    },
+    {
+        "name": "Communications"
+    },
+    {
+        "name": "Energy Minerals"
+    },
+    {
+        "name": "Government"
+    }
+]

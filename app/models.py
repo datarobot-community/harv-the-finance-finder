@@ -82,3 +82,34 @@ class Position(db.Model):
     price = db.Column(db.Float)
     change = db.Column(db.Float)
     portfolio_id = db.Column(db.Integer, db.ForeignKey('portfolio.id'))
+    
+
+class Stock(db.Model):
+    __tablename__ = 'stocks'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    symbol = db.Column(db.String(6))
+    
+    def __init__(self, symbol):
+        self.symbol = symbol    
+    
+    def __repr__(self):
+        return f"<Stock {self.symbol}"
+
+class StockSector(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    symbol = db.Column(db.String(10))
+    security = db.Column(db.String(500))
+    sector = db.Column(db.String(120))
+    sub_industry = db.Column(db.String(120))
+    
+class Stock_Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    stock_name = db.Column(db.String(6))
+    image_url = db.Column(db.String(1024))
+    
+class Stock_Highlow(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    stock_name = db.Column(db.String(6))
+    high_val52wk = db.Column(db.Numeric)
+    low_val52wk = db.Column(db.Numeric)

@@ -18,5 +18,4 @@
     NEED TO GET LIST OF INDUSTRY GROWTH RATES
     
     NEED TO ASSIGN RISK TO STOCKS (high, medium, low)
-    
-    
+```

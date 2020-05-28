@@ -6,7 +6,7 @@ Guidelines for developing and contributing to this project.
 
 //TODO: Update with your details
 
-- [Your name](https://github.com/your-github-username)
+- [rsevey](https://github.com/rsevey)
 - [Someone else name](https://github.com/your-github-username)
 
 ## Opening new issues

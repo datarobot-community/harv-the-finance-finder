@@ -8,6 +8,29 @@ It should include the following:
 
 ## Usage
 
+- Have python 3.7
+- Create virtual environment: ...
+- Install required dependencies:
+  - PostgreSQL
+  - Redis
+  - pip install all the things
+- Setup environment variables
+  - ...
+- Make sure postgres is running
+- Make migrations
+  - flask db init
+  - flask db migrate
+  - flask ... thing with head set something
+
+- flask run
+
+----
+
+- visit /login -> create user (this should redirect)
+- visit /build_portfolio -> pick some stocks (this should redirect to / -> dashboard with suggestions for stocks)
+- visit / -> dashboard, see stocks being suggested
+
+
 TODO: Specify how to use this project
 This can include running the scripts, or where to find API docs if it's a library, command line tool, or similar.
 

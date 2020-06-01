@@ -11,7 +11,78 @@ import json
 
 @app.route('/')
 def index():
-    return render_template('index.html', title="Harv AI")
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    if current_user.has_portfolio():
+        return redirect(url_for('dashboard'))
+    else:
+        return redirect(url_for('create_portfolio'))
+
+@app.route('/portfolio/build', methods=['GET', 'POST'])
+@app.route('/portfolio_build', methods=['GET', 'POST'])
+def create_portfolio():
+    form = PortfolioForm()
+    if form.validate_on_submit():
+        
+        new_portfolio = Portfolio(
+            name = form.name.data, 
+            p_type = form.portfolio_type.data,
+            owner_id=current_user.id,
+
+             # Filters - include stock markets
+            include_nyse = form.include_nyse.data,
+            include_nasdaq = form.include_nasdaq.data,
+            include_nyse_arca = form.include_nyse_arca.data,
+            include_nyse_american = form.include_nyse_american.data,
+
+            # Filters - exclude sectors
+            exclude_communications = form.exclude_communications.data,
+            exclude_energy_minerals = form.exclude_energy_minerals.data,
+            exclude_non_energy_minerals = form.exclude_non_energy_minerals.data,
+            exclude_health_technology = form.exclude_health_technology.data,
+            exclude_health_services = form.exclude_health_services.data,
+            exclude_utilities = form.exclude_utilities.data,
+            exclude_distribution_services = form.exclude_distribution_services.data,
+            exclude_finance = form.exclude_finance.data,
+            exclude_process_industries = form.exclude_process_industries.data,
+            exclude_producer_manufacturing = form.exclude_producer_manufacturing.data,
+            exclude_commercial_services = form.exclude_commercial_services.data,
+            exclude_industrial_services = form.exclude_industrial_services.data,
+            exclude_transportation = form.exclude_transportation.data,
+            exclude_consumer_durables = form.exclude_consumer_durables.data,
+            exclude_consumer_non_durables = form.exclude_consumer_non_durables.data,
+            exclude_retail_trade = form.exclude_retail_trade.data,
+            exclude_electronic_technology = form.exclude_electronic_technology.data,
+            exclude_technology_services = form.exclude_technology_services.data,
+
+            # ESG category (from our AI)
+            # Will be lowest possible risk category (1 - low, 2 - medium, 3- high, 4 - all - include extreme risk)
+            esg_risk_category =  form.esg_risk_category.data
+            
+            # Oher stuff..
+        )
+        db.session.add(new_portfolio)
+        db.session.commit()
+        flash('Congratulations, you have created a portfolio')
+        return redirect(url_for('dashboard'))
+    return render_template('portfolio_build.html', title='Portfolio Wizard', form=form)
+
+@app.route('/dashboard', methods=['GET'])
+def dashboard():
+    portfolios = current_user.portfolios.all()
+    return render_template('dashboard.html', user=current_user, user_portfolios=portfolios)
+
+@app.route('/portfolio/<portfolio_id>')
+def portfolio(portfolio_id):
+    if current_user.is_authenticated:
+        for portfolio in current_user.portfolios.all():
+            print(portfolio.id)
+            if portfolio.id == int(portfolio_id):
+                print('Found portfolio')
+                return render_template('portfolio.html', portfolio=portfolio)
+        print('Didnt find portfolio')
+        return render_template('portfolio.html', portfolio=None)
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -80,58 +151,21 @@ def reset_password(token):
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
 
-@app.route('/portfolio_build', methods=['GET', 'POST'])
-def create_portfolio():
-    form = PortfolioForm()
-    if form.validate_on_submit():
-        new_portfolio = Portfolio(name=form.name.data, p_type=form.portfolio_type.data, initial=form.initial.data,
-                                target=form.target.data, tolerance=form.tolerance.data, priority=form.priority.data, us_equities=form.us_equities.data,
-                                us_bonds=form.us_bonds.data, treasury=form.treasury.data, int_equities=form.int_equities.data, commodities=form.commodities.data,
-                                real_estate=form.real_estate.data, mlps=form.mlps.data, int_bonds=form.int_bonds.data, financial=form.financial.data,
-                                utilitie=form.utilities.data, health_care=form.health_care.data, con_dis=form.con_dis.data, energy=form.energy.data,
-                                industrials=form.industrials.data, con_staples=form.con_staples.data, re=form.re.data, tech=form.tech.data,
-                                materials=form.materials.data, telco=form.telco.data, etf=form.etf.data, restricted=form.restricted.data,
-                                strategy=form.strategy.data)
-        db.session.add(new_portfolio)
-        db.session.commit()
-        flash('Congratulations, you have created a portfolio')
-        return redirect(url_for('portfolio_build'))
-    return render_template('portfolio_build.html', title='Portfolio Wizard', form=form)
+# @app.route("/add-stock", methods=["GET", "POST"])
+# def add_stock():
+#     form = StockForm()  
+#     if form.validate_on_submit():
+#         new_stock = Stock(symbol=form.symbol.data)
+#         db.session.add(new_stock)
+#         db.session.commit()
+#         flash("Stock successfully added")
+#         return redirect(url_for('portfolio'))
+#     return render_template('add_stock.html', form=form)
 
-@app.route('/dashboard', methods=['GET'])
-def dashboard():
-    return render_template('dashboard.html')
+# @app.route("/earnings-calendar")
+# def earnings_calendar():
+#     return render_template('earnings_calendar.html')
 
-@app.route("/add-task", methods=["GET", "POST"])
-def add_task():
-
-    jobs = q.jobs  # Get a list of jobs in the queue
-    message = None
-
-    if request.args:  # Only run if a query string is sent in the request
-        url = request.args.get("url")  # Gets the URL coming in as a query string
-        task = q.enqueue(count_words, url)  # Send a job to the task queue
-        jobs = q.jobs  # Get a list of jobs in the queue
-        q_len = len(q)  # Get the queue length
-        message = f"Task queued at {task.enqueued_at.strftime('%a, %d %b %Y %H:%M:%S')}. {q_len} jobs queued"
-
-    return render_template("add_task.html", message=message, jobs=jobs)
-
-@app.route("/add-stock", methods=["GET", "POST"])
-def add_stock():
-    form = StockForm()  
-    if form.validate_on_submit():
-        new_stock = Stock(symbol=form.symbol.data)
-        db.session.add(new_stock)
-        db.session.commit()
-        flash("Stock successfully added")
-        return redirect(url_for('portfolio'))
-    return render_template('add_stock.html', form=form)
-
-@app.route("/earnings-calendar")
-def earnings_calendar():
-    return render_template('earnings_calendar.html')
-
-@app.route("/dashboard/stock-picks")
-def stock_picks():
-    return render_template('stock_picks.html')
+# @app.route("/dashboard/stock-picks")
+# def stock_picks():
+#     return render_template('stock_picks.html')

@@ -11,7 +11,6 @@ from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail
 
-
 app = Flask(__name__)
 app.config.from_object(Config)
 db =SQLAlchemy(app)
@@ -19,6 +18,8 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 bootstrap = Bootstrap(app)
 mail = Mail(app)
+
+
 
 APCA_API_KEY = os.getenv("APCA_API_KEY")
 APCA_SECRET_KEY = os.getenv("APCA_SECRET_KEY")
@@ -35,4 +36,13 @@ q = Queue(connection=r)
 
 
 
-from app import routes, models, forms, tasks
+from app import routes, models, forms, tasks, seed_stocks
+
+# Seed DB stuff here
+try:
+    seed_stocks.seed_stock_quotes()
+    seed_stocks.seed_esgs()
+    pass
+except:
+    print("Error seeding stock quotes")
+    pass

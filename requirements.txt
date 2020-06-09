@@ -29,3 +29,5 @@ WTForms==2.2.1
 python-dotenv
 redis
 rq
+datarobot==2.20.0
+attrs

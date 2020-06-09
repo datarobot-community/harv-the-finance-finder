@@ -9,20 +9,33 @@ It should include the following:
 ## Usage
 
 - Have python 3.7
-- Create virtual environment: ...
+- Create virtual environment:
+  
+  ```shell
+  python3 -m venv .venv
+  source .venv/bin/activate
+  ```
+
 - Install required dependencies:
   - PostgreSQL
   - Redis
-  - pip install all the things
-- Setup environment variables
-  - ...
-- Make sure postgres is running
-- Make migrations
-  - flask db init
-  - flask db migrate
-  - flask ... thing with head set something
+  - `pip install -r requirements.txt`
+- Setup environment variables - in an `.env` file in the root directory
+  
+  ```shell
+  POSTGRES_CONNECT="postgresql://DB_USER_NAME:@localhost:5432/DB_NAME"
+  IEX_ACCOUNT="YOUR_IEX_PUBLIC_KEY"
+  IEX_KEY="YOUR_IEX_SECRET_KEY"
+  SKEY="SOMETHING"
+```
 
-- flask run
+- Make sure Postgres is running
+- Make migrations
+  - `flask db init` <-- likely unnecessary
+  - `flask db migrate`
+  - `flask db upgrade`
+
+- `flask run`
 
 ----
 

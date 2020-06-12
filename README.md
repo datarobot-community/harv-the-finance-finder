@@ -1,18 +1,20 @@
-# Harv the Finance Finder 
+# Harv the Finance Finder 📈
 
 This is a demo application showcasing how to use DataRobot's machine learning products to find and filter items in a financial context.
 
 This is intended as an educational, technology showcase app, uses fake data, and is in no way a recommendation service.
 
-The app is a Flask application with a set of Python scripts to train and deploy a ML model.
+You can also read the accompanying tutorial at DataRobot's developer documentation site: https://api-docs.datarobot.com/docs/finance-finder-batch-predictions.
 
 ## Usage
 
-You can access the deployed version at the following link: TODO ADD LINK
+You can access the deployed version at the following link: [harv-the-finance-finder.herokuapp.com](https://harv-the-finance-finder.herokuapp.com).
 
 Alternatively, you can also run it yourself 👇
 
 ### Building it yourself
+
+The app is a Flask application with a set of Python scripts to train and deploy a ML model. Follow these steps:
 
 - Have python 3.7 (likely ships with your OS)
 - Create virtual environment:
@@ -22,7 +24,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 - Create a DataRobot account. You can request a trial at https://datarobot.com/lp/trial. 
-- Create an IEX Cloud account (Optional) - they provide financial data
+- Create an IEX Cloud account (Optional) - they provide financial data. The app comes with pre-generated datasets already.
 
 - Install required dependencies:
   - PostgreSQL
@@ -46,18 +48,15 @@ source .venv/bin/activate
 
 - Make sure Postgres is running and you have a database created.
 
-- Make migrations
-  - `flask db init` <-- likely unnecessary
-  - `flask db migrate`
-  - `flask db upgrade`
-
+- Run database migrations scripts: `flask db upgrade`
+- Seed data in your database: `flask seed_data`
 - `flask run` to run the app
 
 - Visit the running app: `https://localhost:5000`
 
 - visit /login -> create user (this should redirect automatically)
 - visit /build_portfolio -> pick some stocks (this should redirect to / -> dashboard with suggestions for stocks)
-- visit / -> dashboard, see stocks being suggested
+- visit / -> dashboard, select a portfolio, see stocks that are suggested for you
 
 ## Development and Contributing
 

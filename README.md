@@ -58,6 +58,19 @@ source .venv/bin/activate
 - visit /build_portfolio -> pick some stocks (this should redirect to / -> dashboard with suggestions for stocks)
 - visit / -> dashboard, select a portfolio, see stocks that are suggested for you
 
+### Steps to deploy on Heroku
+
+You can deploy the app to Heroku.
+
+1. Create new app: `heroku apps:create`
+2. Push to git: `git push heroku master`. This will install all dependencies.
+3. Add Heroku Postgres as Heroku addon in the dashboard
+4. Copy over Postgres config var to `POSTGRES_CONNECT` - by default it's stored as `DATABASE_URL`
+5. Run DB migrations: `heroku run "flask db upgrade"`
+6. If using the attached dataset: `heroku run "flask seed_data"` - you can also optionally first run the script to generate and load new data. This should take a few minutes. The final message should say "Seed Esgs complete"
+7. Set the rest of the environment variables: To run on Heroku you just need `SKEY` - set to anything. This isn't checked, but Flask requires it.
+8. Head over to the app that Heroku has deployed.
+
 ## Development and Contributing
 
 If you'd like to report an issue or bug, suggest improvements, or contribute code to this project, please refer to [CONTRIBUTING.md](CONTRIBUTING.md).

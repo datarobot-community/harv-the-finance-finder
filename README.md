@@ -1,3 +1,5 @@
+**Please note:** The code in these repos is sourced from the DataRobot user community and is not owned or maintained by DataRobot, Inc. You may need to make edits or updates for this code to function properly in your environment.
+
 # Harv the Finance Finder 📈
 
 This is a demo application showcasing how to use DataRobot's machine learning products to find and filter items in a financial context.
